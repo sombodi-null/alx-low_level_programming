@@ -1,13 +1,13 @@
 #include "holberton.h"
 
 /**
- * times_table - prints the times table up to the integer input
+ * print_times_table - prints the times table up to the integer input
  * @n: integer input
  *
  * Return: void
  */
 
-void times_table(int n)
+void print_times_table(int n)
 {
 	int a, b, c, d, e, f;
 
