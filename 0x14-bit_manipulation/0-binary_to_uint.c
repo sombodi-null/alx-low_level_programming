@@ -1,68 +1,72 @@
 #include "main.h"
-#include <stdio.h>
-
 /**
- * binary_to_uint - function that converts a binary number to an unsigned int
- * @b: b is pointing to a string of 0 and 1 chars
- *
- * Return: unsigned integer, converted number, or 0 if
- * there is one or more chars in the string b that is not 0 or 1
- * b is NULL
- */
-
-unsigned int binary_to_uint(const char *b)
+  *_strlen - returns the length of a string.
+  *@s: pointer to string.
+  *
+  *Return: length.
+  */
+unsigned int _strlen(const char *s)
 {
-	unsigned int temp = 0, sum = 0;
-	int i, len = 0;
+	unsigned int i;
 
-	if (b == NULL)
-		return (0);
-
-	len = _strlen(b);
 	i = 0;
-	while (b[i] != '\0')
-	{
-		if ((b[i] != '0' && b[i] != '1'))
-			return (0);
-		temp = (b[i] - 48) * _pow_recursion(2, (len - 1) - i);
-		sum += temp;
-		i++;
-	}
-	return (sum);
-}
-
-/**
- * _strlen - function that returns the length of a string
- * @s: parameter defined in main
- *
- * Return: length of string
- */
-
-int _strlen(const char *s)
-{
-	int i = 0;
-
-	while (*s != '\0')
+	while (s[i] != '\0')
 	{
 		i++;
-		s++;
 	}
 	return (i);
 }
 
 /**
- * _pow_recursion - function that returns x raised to the power of y
- * @x: parameter defined in main, integer
- * @y: parameter defined in main, exponent
- *
- * Return: integer
- */
-
-int _pow_recursion(int x, int y)
+  *getp - returns the value of x to the power of y.
+  *@x: number.
+  *@y: power.
+  *
+  *Return: x to the pow of y.
+  *0 if x < 0.
+  */
+int getp(int x, int y)
 {
 	if (y < 0)
-		return (-1);
+		return (0);
 	if (y == 0)
 		return (1);
-	return (x * _pow_recursion(x, y - 1));
+	if (y == 1)
+		return (x);
+
+	return (x * getp(x, y - 1));
 }
+
+/**
+  *binary_to_uint - converts a binary number to an unsigned int.
+  *@b: pointer to string containing 0 and 1.
+  *
+  *Return: converted number or 0 if b is null or has chars not 0 or 1.
+  */
+unsigned int binary_to_uint(const char *b)
+{
+	unsigned int num, length, index;
+	int power;
+
+	if (!b)
+		return (0);
+
+	length = _strlen(b);
+	power = 0;
+	num = 0;
+	index = length - 1;
+	while (length > 0)
+	{
+		if (b[index] == 48 || b[index] == 49)
+		{
+			num = num + ((b[index] - 48) * getp(2, power));
+			power++;
+			index--;
+			length--;
+		}
+		else
+		{
+			return (0);
+		}
+	}
+	return (num);
